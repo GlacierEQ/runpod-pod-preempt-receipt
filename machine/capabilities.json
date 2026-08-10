@@ -1,0 +1,12 @@
+{
+  "schema": "glaciereq.repo-capabilities.v1",
+  "repository": "GlacierEQ/runpod-pod-preempt-receipt",
+  "capabilities": [
+    {
+      "id": "pod-preempt-receipt",
+      "name": "Pod Preempt Receipt",
+      "status": "SCAFFOLD",
+      "module": "src/pod_preempt_receipt.py"
+    }
+  ]
+}

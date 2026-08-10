@@ -1,0 +1,10 @@
+[project]
+name = "runpod-pod-preempt-receipt"
+version = "0.0.1"
+description = "Scaffold: Pod Preempt Receipt (independent Runpod lens)"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

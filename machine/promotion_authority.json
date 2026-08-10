@@ -1,0 +1,11 @@
+{
+  "schema": "glaciereq.promotion-authority-grant.v1",
+  "repository": "GlacierEQ/runpod-pod-preempt-receipt",
+  "source_sha": "2041d1894740e56c055f478f67ddf4c12269ad519107dddbc00a8a2a3f06b67a",
+  "proof_receipt_digest": "6c891ecd197ed2ee686cf81b3965ac802aed2d53499d48c1c097bf6e9f6e488f",
+  "not_after": 1788948694.832614,
+  "mac": "2dc9adbaf158e0cfe56a233273ca3d4cce92ea5a4c4c2954d05b3ce7d76c58fa",
+  "issuer": "local_operator_promotion_authority",
+  "verified": true,
+  "secret_ref": "src/promotion_authority.py::LOCAL_OPERATOR_SECRET"
+}

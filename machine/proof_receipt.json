@@ -1,0 +1,31 @@
+{
+  "schema": "glaciereq.proof-receipt.v1",
+  "repository": "GlacierEQ/runpod-pod-preempt-receipt",
+  "source_sha": "2041d1894740e56c055f478f67ddf4c12269ad519107dddbc00a8a2a3f06b67a",
+  "proof_id": "elite-runpod-pod-preempt-receipt-1786356694",
+  "environment": {
+    "python": "/Users/kcbflux/.local/bin/python3.11",
+    "PYTHONPATH": "/Users/kcbflux/GlacierEQ_Swarm/job-app/repos/runpod-pod-preempt-receipt:/Users/kcbflux/GlacierEQ_Swarm/job-app/repos/runpod-pod-preempt-receipt/src",
+    "entry": "unittest"
+  },
+  "tests": [
+    "/Users/kcbflux/.local/bin/python3.11 -m unittest discover -s tests -v (x2)"
+  ],
+  "adversarial_tests": [
+    "tests/test_adversarial.py"
+  ],
+  "runtime": {
+    "operate": "scripts/operate.py (x2)",
+    "dual_run_ok": true,
+    "proof_dual_run_ok": true
+  },
+  "result": "PASS",
+  "limitations": [
+    "not production deployed",
+    "reference implementation only"
+  ],
+  "timestamp": "2026-08-10T10:11Z",
+  "artifact_hashes": {
+    "operability_receipt": "cef2dc7b4c52598a9235fd6a9f8b0177e87e0d1b56e7839e2229e9a17c8531a0"
+  }
+}
