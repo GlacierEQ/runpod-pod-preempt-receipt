@@ -1,50 +1,59 @@
 # Pod Preempt Receipt
 
-Independent GlacierEQ portfolio exhibit aligned to **Runpod** operating themes.
+Independent GlacierEQ portfolio implementation aligned to **RunPod** operating themes.
 
-> **Not affiliated.** This repository is not affiliated with, endorsed by, employed by, or deployed at Runpod.
-> No proprietary access, production deployment, customer impact, or company partnership is claimed.
+> **Not affiliated.** This repository is not affiliated with, endorsed by, employed by, or deployed at RunPod. No proprietary access, production deployment, customer impact, or company partnership is claimed.
 
-## Bottleneck (GlacierEQ hypothesis)
+## Purpose
 
-Spot/preemptible GPU pods die without structured recovery receipts for agents.
+Make preemptible GPU termination a recoverable, auditable state transition instead of a pod silently disappearing and an agent guessing where to resume.
 
-**Brick wall:** Silent success without receipts; affiliation or production claims without evidence.
+## Implemented recovery protocol
 
-**Observed public pressure (snapshot hypothesis):** Public market pressure toward AI-enabled products and operators (hypothesis only).
+`PodPreemptReceipt` supports two phases.
 
-## Innovation mechanism
+### Preempt
 
-**Pod Preempt Receipt** — Emit preempt receipts with checkpoint hints and restart grants; refuse silent disappearance.
+- validates the preemption event and heartbeat freshness;
+- considers only checkpoints created before the preemption and marked verified;
+- selects the newest verified checkpoint;
+- computes lost-work time;
+- refuses recovery when heartbeat gaps exceed policy or no verified checkpoint exists;
+- mints a deterministic restart grant bound to preempt id, pod, job, checkpoint id/digest, restart profile, expiry, and maximum attempts.
 
-## Target roles
+### Restart
 
-- Applied AI Systems Engineer
-- Forward-Deployed Engineer
+- verifies grant integrity;
+- requires exact checkpoint lineage;
+- rejects expired grants;
+- rejects restart attempts beyond the declared limit;
+- emits `RESTART_AUTHORIZED` only when every bound remains intact.
 
-## Application move
+## Run
 
-Lead with a small, inspectable Pod Preempt Receipt exhibit and explicit non-affiliation boundary.
+```bash
+python -m pytest -q
+python scripts/operate.py
+```
 
-## Current scaffold state
+Build and install:
 
-This leaf is a **scaffold**: contracts, tests, and a stub mechanism exist so another engineer/AI can fill production-grade code without inventing company affiliation.
+```bash
+python -m pip install build
+python -m build
+python -m pip install dist/*.whl
+pod-preempt-receipt
+```
 
-| Surface | Path |
-|---------|------|
-| Mechanism stub | `src/pod_preempt_receipt.py` |
-| Operate entry | `scripts/operate.py` |
-| Contract tests | `tests/` |
-| Target contract | `machine/target-contract.json` |
-| **AI fill-in brief** | **`DEV_UP_INSTRUCTIONS.md`** |
-| Issue contract | `ISSUE_CONTRACT.md` |
+## Proof surface
 
-## Non-claims
+- `src/pod_preempt_receipt.py` — recovery and restart-grant engine
+- `src/pod_preempt_cli.py` — installable execution surface
+- `tests/test_pod_preempt_receipt.py` — checkpoint selection, heartbeat, lineage, expiry and retry behavior
+- `tests/test_adversarial.py` — fail-closed adversarial coverage
+- `.github/workflows/tests.yml` — tests + cold-start + wheel build/install + installed CLI
+- `machine/` — existing Helix control-plane and promotion surfaces remain preserved
 
-- No Runpod employment, endorsement, proprietary data, or production use
-- No customer, revenue, latency, or scale claims without separate receipts
-- Scaffold tests define **intended behavior**, not verified production excellence
+## Current boundary
 
-## Next gate
-
-Implement mechanism + positive tests + operate receipt.
+The mechanism consumes normalized pod/checkpoint events. It does not control RunPod infrastructure or claim production recovery rates. The next depth step is a disposable worker adapter that persists checkpoints, receives a real termination signal, and proves restart from the emitted grant end-to-end.
